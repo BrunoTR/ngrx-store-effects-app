@@ -8,7 +8,7 @@ import {RouterStateSerializer, StoreRouterConnectingModule} from "@ngrx/router-s
 import { StoreModule, MetaReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import {CustomSerializer, reducers} from "./containers/store/reducers";
+import {CustomSerializer, reducers} from "./store/reducers";
 
 // not used in production
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
