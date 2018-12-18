@@ -3,8 +3,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {Pizza} from '../../models/pizza.model';
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {getAllPizzas, ProductsState} from "../../Store/reducers";
-import {LoadPizzas} from "../../Store/actions";
+
+import {LoadPizzas} from "../../store/actions";
+import {getAllPizzas} from "../../store/selectors/pizzas.selector";
+import {ProductsState} from "../../store/reducers";
 
 
 @Component({
