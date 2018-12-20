@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {ProductsState} from "../../store/reducers";
 import {getSelectedPizza} from "../../store/selectors";
 import {Observable} from "rxjs";
+import {LoadToppings} from "../../store/actions";
 
 @Component({
   selector: 'product-item',
@@ -36,6 +37,7 @@ export class ProductItemComponent implements OnInit {
   constructor(private store: Store<ProductsState>) {}
 
   ngOnInit() {
+    this.store.dispatch(new LoadToppings());
     this.pizza$ = this.store.select(getSelectedPizza)
   }
 
