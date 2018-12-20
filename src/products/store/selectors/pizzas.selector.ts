@@ -7,7 +7,6 @@ import {getRouterState} from "../../../app/store/reducers";
 
 export const getPizzaState = createSelector(getProductsState, (state: ProductsState) => state.pizzas);
 
-//
 export const getAllPizzasEntities = createSelector(getPizzaState, getPizzasEntities);
 
 export const getSelectedPizza = createSelector(
