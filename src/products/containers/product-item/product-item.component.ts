@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 
 import { Pizza } from '../../models/pizza.model';
 
@@ -30,7 +30,7 @@ import {tap} from "rxjs/operators";
     </div>
   `,
 })
-export class ProductItemComponent implements OnInit {
+export class ProductItemComponent implements OnInit, OnDestroy {
   pizza$: Observable<Pizza>;
   visualise$: Observable<Pizza>;
   toppings$: Observable<Topping[]>;
@@ -38,14 +38,22 @@ export class ProductItemComponent implements OnInit {
   constructor(private store: Store<ProductsState>) {}
 
   ngOnInit() {
-    this.pizza$ = this.store.select(getSelectedPizza).pipe(tap((pizza : Pizza = null) => {
-      const pizzaExists = !!(pizza && pizza.toppings);
-      const toppings = pizzaExists? pizza.toppings.map(topping => topping.id) : [ ];
-      this.store.dispatch(new VisualiseToppings(toppings));
-    }));
+    this.pizza$ = this.store.select(getSelectedPizza).pipe(
+      tap((pizza : Pizza = null) => {
+        const pizzaExists = !!(pizza && pizza.toppings);
+        const toppings = pizzaExists? pizza.toppings.map(topping => topping.id) : [ ];
+        this.store.dispatch(new VisualiseToppings(toppings));
+      })
+    );
     this.toppings$ = this.store.select(getAllToppings);
     this.visualise$ = this.store.select(getPizzaVisualised)
   }
+
+  ngOnDestroy(): void {
+    console.log('Componente Item Destruido');
+  }
+
+
 
   onSelect(event: number[]) {
     this.store.dispatch(new VisualiseToppings(event));
