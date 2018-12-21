@@ -4,9 +4,10 @@ import {Pizza} from '../../models/pizza.model';
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 
-import {LoadPizzas} from "../../store/actions";
+import {LoadPizzas, LoadToppings} from "../../store/actions";
 import {getAllPizzas} from "../../store/selectors/pizzas.selector";
 import {ProductsState} from "../../store/reducers";
+import {tap} from "rxjs/operators";
 
 
 @Component({
@@ -39,7 +40,10 @@ export class ProductsComponent implements OnInit {
   constructor(private store: Store<ProductsState>) {}
 
   ngOnInit() {
-    this.pizzas$ = this.store.select(getAllPizzas);
+    this.pizzas$ = this.store.select(getAllPizzas).pipe(
+      tap((pizzas) => console.table(pizzas)),
+    );
     this.store.dispatch(new LoadPizzas());
+    this.store.dispatch(new LoadToppings());
     }
   }

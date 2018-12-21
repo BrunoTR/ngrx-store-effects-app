@@ -2,20 +2,22 @@ import {Topping} from "../../models/topping.model";
 import {
   LOAD_TOPPINGS, LOAD_TOPPINGS_FAIL,
   LOAD_TOPPINGS_SUCCESS,
-  ToppingsAction
+  ToppingsAction, VISUALISE_TOPPINGS
 } from "../actions";
 
 
 export interface ToppingsState {
   entities: { [id: number] : Topping };
   loaded: boolean;
-  loading: boolean
+  loading: boolean;
+  selectedToppings: number[]
 }
 
 export const initialState : ToppingsState = {
   entities: { },
   loaded: false,
   loading: false,
+  selectedToppings: []
 }
 
 export function reducerT (
@@ -23,7 +25,7 @@ export function reducerT (
   action: ToppingsAction
 ) : ToppingsState {
 
-  switch(action.type) {
+   switch(action.type) {
 
     case LOAD_TOPPINGS: {
       return {
@@ -31,6 +33,13 @@ export function reducerT (
         loading: true
       }
     };
+
+    case VISUALISE_TOPPINGS : {
+      const selectedToppings = action.payload;
+      return {
+        ...state, selectedToppings
+      };
+    }
 
     case LOAD_TOPPINGS_SUCCESS: {
       const toppings = action.payload;
@@ -44,8 +53,6 @@ export function reducerT (
           ...state.entities,
         }
     );
-
-      console.log( state.entities );
 
       return {
         ...state,
@@ -70,3 +77,4 @@ export function reducerT (
 export const getToppingsEntities = (state: ToppingsState) => state.entities;
 export const getToppingsLoading = (state: ToppingsState) => state.loading;
 export const getToppingsLoaded = (state: ToppingsState) => state.loaded;
+export const getSelectedToppings = (state: ToppingsState) => state.selectedToppings;
