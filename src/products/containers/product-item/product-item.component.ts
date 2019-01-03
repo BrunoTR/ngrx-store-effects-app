@@ -7,7 +7,7 @@ import {Store} from "@ngrx/store";
 import {ProductsState} from "../../store/reducers";
 import {getAllToppings, getPizzaVisualised, getSelectedPizza} from "../../store/selectors";
 import {Observable} from "rxjs";
-import {LoadToppings, VisualiseToppings} from "../../store/actions";
+import {CreatePizzas, LoadToppings, UpdatePizza, VisualiseToppings} from "../../store/actions";
 import {tap} from "rxjs/operators";
 
 @Component({
@@ -54,11 +54,11 @@ export class ProductItemComponent implements OnInit {
   }
 
   onCreate(event: Pizza) {
-
+    this.store.dispatch(new CreatePizzas(event));
   }
 
   onUpdate(event: Pizza) {
-
+    this.store.dispatch(new UpdatePizza(event));
   }
 
   onRemove(event: Pizza) {
