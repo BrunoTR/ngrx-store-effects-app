@@ -4,7 +4,7 @@ import {
   LOAD_PIZZAS,
   LOAD_PIZZAS_FAIL,
   LOAD_PIZZAS_SUCCESS,
-  PizzasAction, UPDATE_PIZZA_SUCCESS
+  PizzasAction, REMOVE_PIZZA, REMOVE_PIZZA_SUCCESS, UPDATE_PIZZA_SUCCESS
 } from "../actions/pizzas.action";
 
 export interface PizzaState {
@@ -71,7 +71,15 @@ export function reducer (
         return{
           ...state, entities,
         }
-      }
+      };
+
+      case REMOVE_PIZZA_SUCCESS: {
+        const pizza = action.payload;
+        const { [pizza.id]: removed,  ...entities} = state.entities;
+        return{
+          ...state, entities
+        }
+      };
 
     }
 

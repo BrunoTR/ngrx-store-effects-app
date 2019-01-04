@@ -7,7 +7,7 @@ import {Store} from "@ngrx/store";
 import {ProductsState} from "../../store/reducers";
 import {getAllToppings, getPizzaVisualised, getSelectedPizza} from "../../store/selectors";
 import {Observable} from "rxjs";
-import {CreatePizzas, LoadToppings, UpdatePizza, VisualiseToppings} from "../../store/actions";
+import {CreatePizzas, LoadToppings, RemovePizza, UpdatePizza, VisualiseToppings} from "../../store/actions";
 import {tap} from "rxjs/operators";
 
 @Component({
@@ -64,7 +64,7 @@ export class ProductItemComponent implements OnInit {
   onRemove(event: Pizza) {
     const remove = window.confirm('Are you sure?');
     if (remove) {
-
+      this.store.dispatch(new RemovePizza(event));
     }
   }
 }
