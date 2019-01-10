@@ -6,7 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
-
+import {guards} from './guards';
+import {PizzasGuard} from './guards/pizzas.guard';
+import {reducers, effects} from "./store";
 
 // components
 import * as fromComponents from './components';
@@ -14,18 +16,21 @@ import * as fromComponents from './components';
 // containers
 import * as fromContainers from './containers';
 
+//guards
+
 // services
 import * as fromServices from './services';
-import {reducers, effects} from "./store";
 
 // routes
 export const ROUTES: Routes = [
   {
     path: '',
+    canActivate: [PizzasGuard],
     component: fromContainers.ProductsComponent,
   },
   {
     path: 'new',
+    canActivate: [PizzasGuard],
     component: fromContainers.ProductItemComponent,
   },
   {
@@ -43,7 +48,7 @@ export const ROUTES: Routes = [
     StoreModule.forFeature('products', reducers),
     EffectsModule.forFeature(effects),
   ],
-  providers: [...fromServices.services],
+  providers: [...fromServices.services, ...guards],
   declarations: [...fromContainers.containers, ...fromComponents.components],
   exports: [...fromContainers.containers, ...fromComponents.components],
 })
