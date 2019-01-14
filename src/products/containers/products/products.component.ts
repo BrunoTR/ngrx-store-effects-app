@@ -1,17 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-
-import {Pizza} from '../../models/pizza.model';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-
-import {LoadPizzas, LoadToppings} from "../../store/actions";
-import {getAllPizzas} from "../../store/selectors/pizzas.selector";
-import {ProductsState} from "../../store/reducers";
 import {tap} from "rxjs/operators";
+
+import {Pizza} from '../../models/pizza.model';
+import {ProductsState} from "../../store/reducers";
+import {getAllPizzas} from "../../store/selectors/pizzas.selector";
 
 
 @Component({
   selector: 'products',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['products.component.scss'],
   template: `
     <div class="products">
@@ -42,7 +41,6 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.pizzas$ = this.store.select(getAllPizzas).pipe(
       tap((pizzas) => console.log(pizzas)),
-    );
-    this.store.dispatch(new LoadToppings());
+      );
     }
   }

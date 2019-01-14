@@ -7,7 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {guards} from './guards';
+import {PizzasExistsGuard} from './guards/pizza-exists.guard';
 import {PizzasGuard} from './guards/pizzas.guard';
+import {ToppingsGuard} from './guards/toppings.guard';
 import {reducers, effects} from "./store";
 
 // components
@@ -30,11 +32,12 @@ export const ROUTES: Routes = [
   },
   {
     path: 'new',
-    canActivate: [PizzasGuard],
+    canActivate: [PizzasGuard, ToppingsGuard],
     component: fromContainers.ProductItemComponent,
   },
   {
     path: ':pizzaId',
+    canActivate: [PizzasExistsGuard, ToppingsGuard],
     component: fromContainers.ProductItemComponent,
   }
 ];

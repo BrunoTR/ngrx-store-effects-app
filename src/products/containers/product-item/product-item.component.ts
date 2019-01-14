@@ -1,17 +1,18 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-
-import { Pizza } from '../../models/pizza.model';
-
-import { Topping } from '../../models/topping.model';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {tap} from "rxjs/operators";
+
+import {Pizza} from '../../models/pizza.model';
+
+import {Topping} from '../../models/topping.model';
+import {CreatePizzas, RemovePizza, UpdatePizza, VisualiseToppings} from "../../store/actions";
 import {ProductsState} from "../../store/reducers";
 import {getAllToppings, getPizzaVisualised, getSelectedPizza} from "../../store/selectors";
-import {Observable} from "rxjs";
-import {CreatePizzas, LoadToppings, RemovePizza, UpdatePizza, VisualiseToppings} from "../../store/actions";
-import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'product-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['product-item.component.scss'],
   template: `
     <div 
